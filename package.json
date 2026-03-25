@@ -1,13 +1,26 @@
 {
   "name": "spotify-mcp-server",
   "version": "1.0.0",
-  "description": "MCP JSON-RPC server for Spotify Web API integration",
+  "description": "A Model Context Protocol (MCP) server that exposes Spotify's Web API as callable tools for AI assistants — enabling natural-language music search, artist lookup, and audio feature analysis.",
   "main": "server.js",
   "type": "module",
   "scripts": {
     "start": "node server.js",
-    "dev": "node --watch server.js"
+    "dev": "node --watch server.js",
+    "test": "node test-server.js"
   },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "spotify",
+    "spotify-api",
+    "ai",
+    "llm",
+    "claude",
+    "json-rpc",
+    "music",
+    "tools"
+  ],
   "dependencies": {
     "dotenv": "^16.3.1",
     "node-fetch": "^3.3.2"
@@ -15,6 +28,11 @@
   "engines": {
     "node": ">=18.0.0"
   },
-  "author": "",
-  "license": "MIT"
+  "author": "Varun",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/spotify-mcp-server.git"
+  },
+  "homepage": "https://github.com/your-username/spotify-mcp-server#readme"
 }

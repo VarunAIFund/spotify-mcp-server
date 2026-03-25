@@ -24,11 +24,18 @@ function sendJsonRpcRequest(server, method, params = {}, id = 1) {
 
     server.stdout.on('data', responseHandler);
     server.stdin.write(JSON.stringify(request) + '\n');
-    
+
     const timeout = setTimeout(() => {
       server.stdout.off('data', responseHandler);
       reject(new Error('Request timeout'));
     }, 10000);
+
+    // Ensure the timer is cleared once a response arrives so the process can exit cleanly
+    const originalResolve = resolve;
+    resolve = (value) => {
+      clearTimeout(timeout);
+      originalResolve(value);
+    };
   });
 }
 

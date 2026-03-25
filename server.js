@@ -22,7 +22,7 @@ class SpotifyMCPServer {
     }
   }
 
-  handleInitialize(params) {
+  handleInitialize(_params) {
     return {
       protocolVersion: "2024-11-05",
       capabilities: {
@@ -202,30 +202,31 @@ const server = new SpotifyMCPServer();
 
 process.stdin.setEncoding('utf8');
 process.stdin.on('readable', async () => {
-  const chunk = process.stdin.read();
-  if (chunk !== null) {
+  let chunk;
+  // Drain all buffered chunks — readable fires once but read() may have multiple
+  while ((chunk = process.stdin.read()) !== null) {
     let request;
     try {
       request = JSON.parse(chunk.trim());
       const response = await server.handleRequest(request);
-      
+
       const jsonResponse = {
         jsonrpc: "2.0",
         id: request.id,
         result: response
       };
-      
+
       process.stdout.write(JSON.stringify(jsonResponse) + '\n');
     } catch (error) {
       const errorResponse = {
         jsonrpc: "2.0",
-        id: request?.id || null,
+        id: request?.id ?? null,
         error: {
           code: -32603,
           message: error.message
         }
       };
-      
+
       process.stdout.write(JSON.stringify(errorResponse) + '\n');
     }
   }

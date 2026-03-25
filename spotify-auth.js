@@ -9,6 +9,12 @@ class SpotifyAuth {
     this.clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
     this.accessToken = null;
     this.tokenExpiresAt = null;
+
+    if (!this.clientId || !this.clientSecret) {
+      throw new Error(
+        'Missing Spotify credentials. Set SPOTIFY_CLIENT_ID and SPOTIFY_CLIENT_SECRET in your .env file.'
+      );
+    }
   }
 
   async getAccessToken() {
